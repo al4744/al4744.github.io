@@ -1,426 +1,686 @@
-<!-- <!DOCTYPE html>
-<html>
-<body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
-</body>
-</html> -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Name - Professional Portfolio</title>
+    <title>Andy Lee | Developer & Audio Engineer</title>
     <style>
-        /* Base styles */
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
         body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            color: #333;
-            background-color: #f9f9f9;
+            background-color: #121212;
+            color: #f5f5f5;
+            overflow: hidden;
+            height: 100vh;
         }
-        
+
+        /* Container for all content */
         .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-        
-        /* Header styles */
-        header {
-            background-color: #2c3e50;
-            color: white;
-            padding: 60px 0;
-            text-align: center;
+
+        /* Navigation Bar */
+        .nav-bar {
+            display: flex;
+            justify-content: center;
+            padding: 1.5rem 0;
+            background-color: rgba(30, 30, 30, 0.9);
+            border-bottom: 1px solid #2a2a2a;
+            position: relative;
+            z-index: 10;
         }
-        
-        header h1 {
-            margin: 0;
+
+        .nav-item {
+            margin: 0 1.5rem;
+            cursor: pointer;
+            color: #aaa;
+            font-weight: 600;
+            transition: color 0.3s, transform 0.3s;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: #64ffda;
+            transform: translateY(-2px);
+        }
+
+        .nav-item.active {
+            background-color: rgba(100, 255, 218, 0.1);
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 50%;
+            background-color: #64ffda;
+            transition: all 0.3s;
+        }
+
+        .nav-item:hover::after, .nav-item.active::after {
+            width: 100%;
+            left: 0;
+        }
+
+        /* Content Area */
+        .content-area {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 2rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Content Styles */
+        .page-title {
+            color: #64ffda;
             font-size: 2.5rem;
-        }
-        
-        header p {
-            margin: 10px 0 0;
-            font-size: 1.2rem;
-        }
-        
-        /* Navigation */
-        nav {
-            background-color: #34495e;
-            padding: 15px 0;
-        }
-        
-        nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            text-align: center;
-        }
-        
-        nav li {
+            margin-bottom: 1.5rem;
+            position: relative;
             display: inline-block;
-            margin: 0 15px;
         }
-        
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s;
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            width: 30%;
+            height: 3px;
+            bottom: -8px;
+            left: 0;
+            background-color: #64ffda;
         }
-        
-        nav a:hover {
-            color: #3498db;
+
+        .page-content {
+            max-height: calc(100% - 4rem);
+            overflow: auto;
+            padding-right: 1rem;
+            /* Hide scrollbar for Chrome, Safari and Opera */
+            scrollbar-width: thin;
+            scrollbar-color: #2a2a2a #121212;
         }
-        
-        /* Section styles */
-        section {
-            padding: 40px 0;
-            border-bottom: 1px solid #eee;
+
+        /* Custom scrollbar for WebKit browsers */
+        .page-content::-webkit-scrollbar {
+            width: 8px;
         }
-        
-        section h2 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #2c3e50;
+
+        .page-content::-webkit-scrollbar-track {
+            background: #121212;
         }
-        
-        /* About section */
-        .about-content {
+
+        .page-content::-webkit-scrollbar-thumb {
+            background-color: #2a2a2a;
+            border-radius: 4px;
+        }
+
+        /* About Me Section */
+        .profile-container {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #2a2a2a;
+            margin-right: 2rem;
+            border: 3px solid #64ffda;
             display: flex;
             align-items: center;
-            gap: 40px;
-        }
-        
-        .profile-image {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 5px solid #3498db;
-        }
-        
-        /* Skills section */
-        .skills-list {
-            display: flex;
-            flex-wrap: wrap;
             justify-content: center;
-            gap: 10px;
+            font-size: 2rem;
+            color: #64ffda;
         }
-        
-        .skill-tag {
-            background-color: #3498db;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
+
+        .profile-info h2 {
+            margin-bottom: 0.5rem;
+            font-size: 2rem;
         }
-        
-        /* Experience section */
-        .experience-item {
-            margin-bottom: 30px;
+
+        .profile-info p {
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            color: #ccc;
         }
-        
-        .experience-item h3 {
-            margin-bottom: 5px;
-            color: #2c3e50;
+
+        .contact-info {
+            margin-top: 1rem;
         }
-        
-        .experience-item .role {
-            font-weight: bold;
-            color: #3498db;
+
+        .contact-info a {
+            color: #64ffda;
+            text-decoration: none;
+            margin-right: 1rem;
+            transition: opacity 0.3s;
         }
-        
-        .experience-item .period {
-            font-style: italic;
-            color: #7f8c8d;
+
+        .contact-info a:hover {
+            opacity: 0.8;
         }
-        
-        /* Projects section */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        
+
+        /* Projects Section */
         .project-card {
-            background-color: white;
-            border-radius: 5px;
-            overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            background-color: rgba(40, 40, 40, 0.6);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #64ffda;
             transition: transform 0.3s, box-shadow 0.3s;
         }
-        
+
         .project-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
-        
-        .project-card img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
+
+        .project-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            color: #fff;
         }
-        
-        .project-card .card-content {
-            padding: 20px;
+
+        .project-tech {
+            font-size: 0.9rem;
+            color: #64ffda;
+            margin-bottom: 1rem;
         }
-        
-        .project-card h3 {
-            margin-top: 0;
-            color: #2c3e50;
+
+        .project-description {
+            color: #ddd;
+            line-height: 1.5;
         }
-        
-        .project-card .project-tags {
+
+        /* Skills Section */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background-color: rgba(40, 40, 40, 0.6);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border-top: 4px solid #64ffda;
+        }
+
+        .skill-category h3 {
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .skill-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 5px;
-            margin-top: 10px;
+            gap: 0.5rem;
         }
-        
-        .project-card .project-tag {
-            background-color: #eee;
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-size: 0.8rem;
+
+        .skill-tag {
+            background-color: rgba(100, 255, 218, 0.1);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #ddd;
+            transition: background-color 0.3s, transform 0.2s;
         }
-        
-        /* Contact section */
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
+
+        .skill-tag:hover {
+            background-color: rgba(100, 255, 218, 0.2);
+            transform: scale(1.05);
         }
-        
-        .form-group {
-            margin-bottom: 20px;
+
+        /* Experience Section */
+        .experience-item {
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 1.5rem;
+            border-left: 2px solid #2a2a2a;
+            padding-bottom: 1rem;
         }
-        
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: #64ffda;
+            border-radius: 50%;
+            left: -7px;
+            top: 8px;
         }
-        
-        input, textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
         }
-        
-        button {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s;
+
+        .experience-title {
+            font-weight: 600;
+            color: #fff;
         }
-        
-        button:hover {
-            background-color: #2980b9;
+
+        .experience-date {
+            color: #64ffda;
+            font-size: 0.9rem;
         }
-        
-        /* Footer */
-        footer {
-            background-color: #2c3e50;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-            margin-top: 40px;
+
+        .experience-company {
+            color: #ddd;
+            margin-bottom: 0.8rem;
         }
-        
-        .social-links {
-            margin-bottom: 15px;
+
+        .experience-description {
+            color: #aaa;
+            line-height: 1.5;
         }
-        
-        .social-links a {
-            color: white;
-            margin: 0 10px;
-            font-size: 1.5rem;
-            text-decoration: none;
+
+        .experience-description ul {
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
         }
-        
-        /* Responsive adjustments */
+
+        .experience-description li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Education Section */
+        .education-item {
+            background-color: rgba(40, 40, 40, 0.6);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #64ffda;
+        }
+
+        .education-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .education-school {
+            font-weight: 600;
+            color: #fff;
+            font-size: 1.2rem;
+        }
+
+        .education-date {
+            color: #64ffda;
+        }
+
+        .education-degree {
+            color: #ddd;
+            margin-bottom: 0.8rem;
+        }
+
+        .education-details {
+            color: #aaa;
+        }
+
+        .courses {
+            margin-top: 0.8rem;
+        }
+
+        .courses-title {
+            font-weight: 600;
+            color: #ddd;
+            margin-bottom: 0.5rem;
+        }
+
+        .courses-list {
+            color: #aaa;
+            line-height: 1.5;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* Responsive design */
         @media (max-width: 768px) {
-            .about-content {
-                flex-direction: column;
-                text-align: center;
+            .nav-bar {
+                padding: 1rem 0;
             }
-            
-            .projects-grid {
+
+            .nav-item {
+                margin: 0 0.5rem;
+                font-size: 0.9rem;
+                padding: 0.5rem;
+            }
+
+            .page {
+                padding: 1rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .profile-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .profile-pic {
+                margin-right: 0;
+                margin-bottom: 1.5rem;
+            }
+
+            .skills-container {
                 grid-template-columns: 1fr;
+            }
+
+            .experience-header {
+                flex-direction: column;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header Section -->
-    <header>
-        <div class="container">
-            <h1>Your Name</h1>
-            <p>Professional Title | Specialty</p>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <div class="nav-bar">
+            <div class="nav-item" data-page="about">About Me</div>
+            <div class="nav-item" data-page="projects">Projects</div>
+            <div class="nav-item" data-page="skills">Skills</div>
+            <div class="nav-item" data-page="experience">Experience</div>
+            <div class="nav-item" data-page="education">Education</div>
         </div>
-    </header>
-    
-    <!-- Navigation -->
-    <nav>
-        <div class="container">
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
-    
-    <!-- Main Content -->
-    <main class="container">
-        <!-- About Section -->
-        <section id="about">
-            <h2>About Me</h2>
-            <div class="about-content">
-                <img src="/api/placeholder/200/200" alt="Profile Photo" class="profile-image">
-                <div>
-                    <p>Hello! I'm [Your Name], a [Your Profession] with [X years] of experience specializing in [Your Specialty].</p>
-                    <p>I'm passionate about [what you're passionate about professionally]. My goal is to [your professional goal or mission statement].</p>
-                    <p>When I'm not [your profession-related activity], you can find me [your hobby or interest outside of work].</p>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Skills Section -->
-        <section id="skills">
-            <h2>Skills</h2>
-            <div class="skills-list">
-                <div class="skill-tag">Skill 1</div>
-                <div class="skill-tag">Skill 2</div>
-                <div class="skill-tag">Skill 3</div>
-                <div class="skill-tag">Skill 4</div>
-                <div class="skill-tag">Skill 5</div>
-                <div class="skill-tag">Skill 6</div>
-                <div class="skill-tag">Skill 7</div>
-                <div class="skill-tag">Skill 8</div>
-            </div>
-        </section>
-        
-        <!-- Experience Section -->
-        <section id="experience">
-            <h2>Experience</h2>
-            
-            <div class="experience-item">
-                <h3>Company Name</h3>
-                <p class="role">Your Role</p>
-                <p class="period">Month Year - Present</p>
-                <p>Description of your responsibilities and achievements. Be specific about the impact you made and use quantifiable results when possible.</p>
-            </div>
-            
-            <div class="experience-item">
-                <h3>Previous Company</h3>
-                <p class="role">Your Previous Role</p>
-                <p class="period">Month Year - Month Year</p>
-                <p>Description of your responsibilities and achievements at this previous position. Focus on transferable skills and accomplishments relevant to your target role.</p>
-            </div>
-            
-            <div class="experience-item">
-                <h3>Earlier Company</h3>
-                <p class="role">Earlier Role</p>
-                <p class="period">Month Year - Month Year</p>
-                <p>Brief description of earlier work experience. Include highlights that demonstrate your growth and development in your career.</p>
-            </div>
-        </section>
-        
-        <!-- Projects Section -->
-        <section id="projects">
-            <h2>Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <img src="/api/placeholder/300/180" alt="Project 1">
-                    <div class="card-content">
-                        <h3>Project Name</h3>
-                        <p>Description of the project, including your role, the technologies used, and the outcomes achieved.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">Technology 1</span>
-                            <span class="project-tag">Technology 2</span>
-                            <span class="project-tag">Technology 3</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="project-card">
-                    <img src="/api/placeholder/300/180" alt="Project 2">
-                    <div class="card-content">
-                        <h3>Another Project</h3>
-                        <p>Description of another significant project that showcases different skills or experiences.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">Technology 1</span>
-                            <span class="project-tag">Technology 2</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="project-card">
-                    <img src="/api/placeholder/300/180" alt="Project 3">
-                    <div class="card-content">
-                        <h3>Third Project</h3>
-                        <p>Description of a third project that highlights additional capabilities or achievements.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">Technology 1</span>
-                            <span class="project-tag">Technology 2</span>
-                            <span class="project-tag">Technology 3</span>
+
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- About Me -->
+            <div id="about" class="page">
+                <h1 class="page-title">About Me</h1>
+                <div class="page-content">
+                    <div class="profile-container">
+                        <div class="profile-pic">AL</div>
+                        <div class="profile-info">
+                            <h2>Andy Lee</h2>
+                            <p>I'm a Computer Science graduate student at Columbia University with a background in Music Technology. My unique combination of technical skills and creative experience allows me to approach problems from multiple perspectives.</p>
+                            <p>With expertise in various programming languages and audio engineering, I'm passionate about developing innovative solutions that bridge technology and creative applications.</p>
+                            <div class="contact-info">
+                                <a href="mailto:al4744@columbia.edu">al4744@columbia.edu</a>
+                                <a href="https://linkedin.com/in/andy-lee1" target="_blank">LinkedIn</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-        
-        <!-- Contact Section -->
-        <section id="contact">
-            <h2>Contact Me</h2>
-            <div class="contact-form">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required>
+
+            <!-- Projects -->
+            <div id="projects" class="page">
+                <h1 class="page-title">Projects</h1>
+                <div class="page-content">
+                    <div class="project-card">
+                        <h3 class="project-title">Analog / Digital Synthesizers</h3>
+                        <div class="project-tech">C++, KiCad, Fusion360, PCB Design, 3D Modeling, Analog / Digital Signal Processing</div>
+                        <p class="project-description">Independently created and developed both analog and digital synthesizers featuring custom-built circuity and software in C++ to simulate / synthesize various waveforms, effects, and control interfaces.</p>
+                    </div>
+
+                    <div class="project-card">
+                        <h3 class="project-title">Interactive Sound / Game Ball</h3>
+                        <div class="project-tech">C++, KiCad, Fusion360, PCB Design, 3D Modeling, Analog / Digital Signal Processing</div>
+                        <p class="project-description">Built all components of interactive ball with embedded sensors, allowing users to manipulate sound and play games based on orientation and accelerometer data. Developed unique user interface and algorithms in C++, created custom Printed Circuit Board (PCB) and designed 3D Model using KiCad and Fusion360.</p>
+                    </div>
+
+                    <div class="project-card">
+                        <h3 class="project-title">Word Replacer Tool</h3>
+                        <div class="project-tech">Java, Data Structures, Algorithms, File Manipulation, Performance Optimization</div>
+                        <p class="project-description">Developed a program in Java that performs global search and replace within a text file based on provided input text and word replacement pairs. Implemented several data structures (BSTree, RBTree, HashMap) to store and manage word pairs efficiently. Designed custom algorithms able to manage large inputs by utilizing unique transitive dependency handling and cycle detection, leading to highly optimized performance and runtimes.</p>
+                    </div>
+
+                    <div class="project-card">
+                        <h3 class="project-title">Content Recommendation System</h3>
+                        <div class="project-tech">Python, Matplotlib, Matrix Factorization, Probability, Model Evaluation</div>
+                        <p class="project-description">Applied SVD, NMF, and ALS to uncover user preferences; integrated Bayesian models and conditional probability to enhance prediction accuracy. Optimized models using gradient descent and alternating minimization; handled sparse data, imputation, and feature engineering; evaluated performance with RMSE, precision, recall, and cross-validation.</p>
+                    </div>
                 </div>
-                
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="subject">Subject</label>
-                    <input type="text" id="subject" name="subject" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" rows="5" required></textarea>
-                </div>
-                
-                <button type="submit">Send Message</button>
             </div>
-        </section>
-    </main>
-    
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="social-links">
-                <!-- Replace '#' with your actual social media links -->
-                <a href="#">LinkedIn</a>
-                <a href="#">GitHub</a>
-                <a href="#">Twitter</a>
+
+            <!-- Skills -->
+            <div id="skills" class="page">
+                <h1 class="page-title">Skills</h1>
+                <div class="page-content">
+                    <div class="skills-container">
+                        <div class="skill-category">
+                            <h3>Programming Languages</h3>
+                            <div class="skill-list">
+                                <div class="skill-tag">Python</div>
+                                <div class="skill-tag">Java</div>
+                                <div class="skill-tag">C</div>
+                                <div class="skill-tag">C++</div>
+                                <div class="skill-tag">R</div>
+                                <div class="skill-tag">HTML</div>
+                                <div class="skill-tag">CSS</div>
+                                <div class="skill-tag">JavaScript</div>
+                                <div class="skill-tag">YAML</div>
+                                <div class="skill-tag">Max</div>
+                                <div class="skill-tag">Shell Scripting</div>
+                            </div>
+                        </div>
+
+                        <div class="skill-category">
+                            <h3>Software & Tools</h3>
+                            <div class="skill-list">
+                                <div class="skill-tag">KiCad</div>
+                                <div class="skill-tag">Fusion360</div>
+                                <div class="skill-tag">Pro Tools</div>
+                                <div class="skill-tag">Logic Pro X</div>
+                                <div class="skill-tag">Ableton Live</div>
+                                <div class="skill-tag">Cubase</div>
+                                <div class="skill-tag">Serato DJ Pro</div>
+                            </div>
+                        </div>
+
+                        <div class="skill-category">
+                            <h3>Development Tools</h3>
+                            <div class="skill-list">
+                                <div class="skill-tag">Git</div>
+                                <div class="skill-tag">GitHub</div>
+                                <div class="skill-tag">VSCode</div>
+                                <div class="skill-tag">PyCharm</div>
+                                <div class="skill-tag">IntelliJ</div>
+                                <div class="skill-tag">Jupyter Notebook</div>
+                                <div class="skill-tag">Google Collab</div>
+                                <div class="skill-tag">Multipass</div>
+                                <div class="skill-tag">Vim</div>
+                                <div class="skill-tag">Teensy</div>
+                                <div class="skill-tag">Arduino</div>
+                            </div>
+                        </div>
+
+                        <div class="skill-category">
+                            <h3>Areas of Expertise</h3>
+                            <div class="skill-list">
+                                <div class="skill-tag">Data Structures</div>
+                                <div class="skill-tag">Algorithms</div>
+                                <div class="skill-tag">PCB Design</div>
+                                <div class="skill-tag">3D Modeling</div>
+                                <div class="skill-tag">Signal Processing</div>
+                                <div class="skill-tag">Audio Engineering</div>
+                                <div class="skill-tag">Machine Learning</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <p>&copy; 2025 Your Name. All Rights Reserved.</p>
+
+            <!-- Experience -->
+            <div id="experience" class="page">
+                <h1 class="page-title">Experience</h1>
+                <div class="page-content">
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-title">Concert Recordist</div>
+                            <div class="experience-date">Dec 2023 - May 2024</div>
+                        </div>
+                        <div class="experience-company">New York University, New York, NY</div>
+                        <div class="experience-description">
+                            <ul>
+                                <li>Selected to manage setup, recording, live mixing, and livestreaming of 30+ university performances and recitals</li>
+                                <li>Coordinated closely with performers and directors to design custom mic setups and sound mixes for diverse arrangements and genres, ensuring the perfect balance and smooth execution of performances</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-title">Studio Engineer Intern</div>
+                            <div class="experience-date">Aug 2023 - Dec 2023</div>
+                        </div>
+                        <div class="experience-company">James L. Dolan Music Recording Studio, New York, NY</div>
+                        <div class="experience-description">
+                            <ul>
+                                <li>Selected into highly prestigious program in one of most technologically advanced audio recording facilities</li>
+                                <li>Ran Pro Tools, worked with patch bay and console, setup and broke down recording sessions, repaired equipment, and assisted clients with recording and mixing</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-title">Intern</div>
+                            <div class="experience-date">Jun 2023 - Aug 2023</div>
+                        </div>
+                        <div class="experience-company">Live Nation, Los Angeles, CA</div>
+                        <div class="experience-description">
+                            <ul>
+                                <li>Collaborated with several departments of Fortune 500 multinational live entertainment company promoting large scale events, ticket sale management, and event production</li>
+                                <li>Planned artists' hospitality and experiences for current tours, created new databases and dossiers containing thousands of artists and venues, organized business services including Ticketmaster</li>
+                                <li>Operated Los Angeles venues such as The Wiltern, Five Point Amphitheatre and The Belasco</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Education -->
+            <div id="education" class="page">
+                <h1 class="page-title">Education</h1>
+                <div class="page-content">
+                    <div class="education-item">
+                        <div class="education-header">
+                            <div class="education-school">Columbia University</div>
+                            <div class="education-date">Expected May 2026</div>
+                        </div>
+                        <div class="education-degree">Master of Science in Computer Science</div>
+                        <div class="education-details">
+                            <div class="courses">
+                                <div class="courses-title">Courses:</div>
+                                <div class="courses-list">
+                                    Computer Science in Java, Data Structures, Advanced Programming, Linear Algebra & Probability
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="education-item">
+                        <div class="education-header">
+                            <div class="education-school">New York University</div>
+                            <div class="education-date">May 2024</div>
+                        </div>
+                        <div class="education-degree">Bachelors in Music Technology, Minor in Business of Entertainment, Media and Technology</div>
+                        <div class="education-details">
+                            Magna Cum Laude & Academic Achievement Award in Music Technology
+                            <div class="courses">
+                                <div class="courses-title">Courses:</div>
+                                <div class="courses-list">
+                                    Analog & Digital Electronics, Electronic Product Design, Analog & Digital Recording Tech, Midi Tech, Computer Programming, Electronic Music Synthesis, AI: Thinking Learning & Consciousness
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </footer>
+    </div>
+
+    <script>
+        // JavaScript for handling navigation and page transitions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all navigation items and pages
+            const navItems = document.querySelectorAll('.nav-item');
+            const pages = document.querySelectorAll('.page');
+            
+            // Show About page by default
+            document.getElementById('about').classList.add('active');
+            document.querySelector('[data-page="about"]').classList.add('active');
+            
+            // Handle click events for navigation
+            navItems.forEach(item => {
+                // Handle hover events
+                item.addEventListener('mouseenter', function() {
+                    const pageId = this.getAttribute('data-page');
+                    
+                    // Only show the page if no page is currently active (locked by click)
+                    if (!document.querySelector('.nav-item.active')) {
+                        pages.forEach(page => page.classList.remove('active'));
+                        document.getElementById(pageId).classList.add('active');
+                    }
+                });
+                
+                // Handle click events
+                item.addEventListener('click', function() {
+                    // First, remove active class from all nav items and pages
+                    navItems.forEach(navItem => navItem.classList.remove('active'));
+                    pages.forEach(page => page.classList.remove('active'));
+                    
+                    // Then add active class to the clicked item and corresponding page
+                    this.classList.add('active');
+                    const pageId = this.getAttribute('data-page');
+                    document.getElementById(pageId).classList.add('active');
+                });
+            });
+            
+            // Handle mouse leaving navigation area
+            document.querySelector('.nav-bar').addEventListener('mouseleave', function() {
+                // If no page is locked by click, return to the default page
+                if (!document.querySelector('.nav-item.active')) {
+                    pages.forEach(page => page.classList.remove('active'));
+                    document.getElementById('about').classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
