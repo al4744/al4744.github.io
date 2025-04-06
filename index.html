@@ -1,7 +1,426 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <body>
 <h1>Hello World</h1>
 <p>I'm hosted with GitHub Pages.</p>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Professional Portfolio</title>
+    <style>
+        /* Base styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header styles */
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        header p {
+            margin: 10px 0 0;
+            font-size: 1.2rem;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: #34495e;
+            padding: 15px 0;
+        }
+        
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+        
+        nav li {
+            display: inline-block;
+            margin: 0 15px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #3498db;
+        }
+        
+        /* Section styles */
+        section {
+            padding: 40px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        section h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+        
+        /* About section */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #3498db;
+        }
+        
+        /* Skills section */
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .skill-tag {
+            background-color: #3498db;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        /* Experience section */
+        .experience-item {
+            margin-bottom: 30px;
+        }
+        
+        .experience-item h3 {
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        
+        .experience-item .role {
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .experience-item .period {
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        
+        /* Projects section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .project-card {
+            background-color: white;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .project-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .project-card .card-content {
+            padding: 20px;
+        }
+        
+        .project-card h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        
+        .project-card .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        
+        .project-card .project-tag {
+            background-color: #eee;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+        }
+        
+        /* Contact section */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+        
+        .social-links {
+            margin-bottom: 15px;
+        }
+        
+        .social-links a {
+            color: white;
+            margin: 0 10px;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .about-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <h1>Your Name</h1>
+            <p>Professional Title | Specialty</p>
+        </div>
+    </header>
+    
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="container">
+        <!-- About Section -->
+        <section id="about">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <img src="/api/placeholder/200/200" alt="Profile Photo" class="profile-image">
+                <div>
+                    <p>Hello! I'm [Your Name], a [Your Profession] with [X years] of experience specializing in [Your Specialty].</p>
+                    <p>I'm passionate about [what you're passionate about professionally]. My goal is to [your professional goal or mission statement].</p>
+                    <p>When I'm not [your profession-related activity], you can find me [your hobby or interest outside of work].</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Skills Section -->
+        <section id="skills">
+            <h2>Skills</h2>
+            <div class="skills-list">
+                <div class="skill-tag">Skill 1</div>
+                <div class="skill-tag">Skill 2</div>
+                <div class="skill-tag">Skill 3</div>
+                <div class="skill-tag">Skill 4</div>
+                <div class="skill-tag">Skill 5</div>
+                <div class="skill-tag">Skill 6</div>
+                <div class="skill-tag">Skill 7</div>
+                <div class="skill-tag">Skill 8</div>
+            </div>
+        </section>
+        
+        <!-- Experience Section -->
+        <section id="experience">
+            <h2>Experience</h2>
+            
+            <div class="experience-item">
+                <h3>Company Name</h3>
+                <p class="role">Your Role</p>
+                <p class="period">Month Year - Present</p>
+                <p>Description of your responsibilities and achievements. Be specific about the impact you made and use quantifiable results when possible.</p>
+            </div>
+            
+            <div class="experience-item">
+                <h3>Previous Company</h3>
+                <p class="role">Your Previous Role</p>
+                <p class="period">Month Year - Month Year</p>
+                <p>Description of your responsibilities and achievements at this previous position. Focus on transferable skills and accomplishments relevant to your target role.</p>
+            </div>
+            
+            <div class="experience-item">
+                <h3>Earlier Company</h3>
+                <p class="role">Earlier Role</p>
+                <p class="period">Month Year - Month Year</p>
+                <p>Brief description of earlier work experience. Include highlights that demonstrate your growth and development in your career.</p>
+            </div>
+        </section>
+        
+        <!-- Projects Section -->
+        <section id="projects">
+            <h2>Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <img src="/api/placeholder/300/180" alt="Project 1">
+                    <div class="card-content">
+                        <h3>Project Name</h3>
+                        <p>Description of the project, including your role, the technologies used, and the outcomes achieved.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Technology 1</span>
+                            <span class="project-tag">Technology 2</span>
+                            <span class="project-tag">Technology 3</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <img src="/api/placeholder/300/180" alt="Project 2">
+                    <div class="card-content">
+                        <h3>Another Project</h3>
+                        <p>Description of another significant project that showcases different skills or experiences.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Technology 1</span>
+                            <span class="project-tag">Technology 2</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <img src="/api/placeholder/300/180" alt="Project 3">
+                    <div class="card-content">
+                        <h3>Third Project</h3>
+                        <p>Description of a third project that highlights additional capabilities or achievements.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Technology 1</span>
+                            <span class="project-tag">Technology 2</span>
+                            <span class="project-tag">Technology 3</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section id="contact">
+            <h2>Contact Me</h2>
+            <div class="contact-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+                
+                <button type="submit">Send Message</button>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <!-- Replace '#' with your actual social media links -->
+                <a href="#">LinkedIn</a>
+                <a href="#">GitHub</a>
+                <a href="#">Twitter</a>
+            </div>
+            <p>&copy; 2025 Your Name. All Rights Reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>
