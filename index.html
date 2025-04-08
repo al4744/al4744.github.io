@@ -14,8 +14,31 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        /* Gradient animation properties */
+        :root {
+            --g4-1-x-position: 87.23379629629622%;
+            --g4-1-y-position: 83.08008213552361%;
+            --g4-2-x-position: 18.900462962962923%;
+            --g4-2-y-position: 78.15195071868584%;
+            --g4-3-x-position: 88.62268518518512%;
+            --g4-3-y-position: 15.071868583162217%;
+            --g4-4-x-position: 11.712962962962967%;
+            --g4-4-y-position: 16.550308008213555%;
+        }
+
+        /* FIX IDE / CURSOR CODE TEXT COLOR */
+        /* UNCOMMENT THIS FOR SMOOTHER ANIMATION */
+        @property --g4-1-x-position { syntax: "<percentage>"; inherits: false; initial-value: 87.23379629629622%; }
+        @property --g4-1-y-position { syntax: "<percentage>"; inherits: false; initial-value: 83.08008213552361%; }
+        @property --g4-2-x-position { syntax: "<percentage>"; inherits: false; initial-value: 18.900462962962923%; }
+        @property --g4-2-y-position { syntax: "<percentage>"; inherits: false; initial-value: 78.15195071868584%; }
+        @property --g4-3-x-position { syntax: "<percentage>"; inherits: false; initial-value: 88.62268518518512%; }
+        @property --g4-3-y-position { syntax: "<percentage>"; inherits: false; initial-value: 15.071868583162217%; }
+        @property --g4-4-x-position { syntax: "<percentage>"; inherits: false; initial-value: 11.712962962962967%; }
+        @property --g4-4-y-position { syntax: "<percentage>"; inherits: false; initial-value: 16.550308008213555%; }
+
         body {
-            background-color: #121212;
+            /* background-color: #121212; */
             color: #f5f5f5;
             overflow: hidden;
             height: 100vh;
@@ -26,6 +49,60 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Animated gradient background */
+        .animated-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(100% 100% at var(--g4-1-x-position) var(--g4-1-y-position), #3a86ff -100%, transparent), 
+                        radial-gradient(100% 100% at var(--g4-2-x-position) var(--g4-2-y-position), #8338ec -100%, transparent), 
+                        radial-gradient(100% 100% at var(--g4-3-x-position) var(--g4-3-y-position), #00ffe1 -100%, transparent), 
+                        radial-gradient(100% 100% at var(--g4-4-x-position) var(--g4-4-y-position), #1481f5 -100%, transparent), 
+                        #121212;
+            animation-name: g-4;
+            animation-iteration-count: infinite;
+            animation-duration: 15s;
+            animation-timing-function: ease-in-out;
+            z-index: 0;
+        }
+
+        @keyframes g-4 { 
+            25% { 
+                --g4-1-x-position: 88.11342592592592%; 
+                --g4-1-y-position: 17.74127310061603%; 
+                --g4-2-x-position: 86.99074074074056%; 
+                --g4-2-y-position: 80.29774127310063%; 
+                --g4-3-x-position: 11.157407407407389%; 
+                --g4-3-y-position: 18.80903490759754%; 
+                --g4-4-x-position: 15.543981481481403%; 
+                --g4-4-y-position: 78.31622176591377%; 
+            } 
+            50% { 
+                --g4-1-x-position: 13.888888888888834%; 
+                --g4-1-y-position: 18.891170431211524%; 
+                --g4-2-x-position: 85.20833333333329%; 
+                --g4-2-y-position: 17.874743326488705%; 
+                --g4-3-x-position: 15%; 
+                --g4-3-y-position: 85%; 
+                --g4-4-x-position: 100%; 
+                --g4-4-y-position: 100%; 
+            } 
+            75% { 
+                --g4-1-x-position: 17.071759259259224%; 
+                --g4-1-y-position: 75.56468172484597%; 
+                --g4-2-x-position: 13.136574074074%; 
+                --g4-2-y-position: 20.739219712525706%; 
+                --g4-3-x-position: 84.25925925925932%; 
+                --g4-3-y-position: 74.94866529774129%; 
+                --g4-4-x-position: 81.82870370370377%; 
+                --g4-4-y-position: 16.837782340862468%; 
+            } 
         }
 
         /* Navigation Bar */
@@ -33,8 +110,10 @@
             display: flex;
             justify-content: center;
             padding: 1.5rem 0;
-            background-color: rgba(30, 30, 30, 0.9);
-            border-bottom: 1px solid #2a2a2a;
+            /* background-color: rgba(30, 30, 30, 0.9); */
+            background-color: rgba(18, 18, 18, 0.3);
+            backdrop-filter: blur(5px);
+            /* border-bottom: 1px solid #2a2a2a; */
             position: relative;
             z-index: 10;
         }
@@ -183,7 +262,8 @@
         .profile-info p {
             line-height: 1.6;
             margin-bottom: 1rem;
-            color: #ccc;
+            color: #fff;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
         }
 
         .contact-info {
@@ -193,8 +273,12 @@
         .contact-info a {
             color: #64ffda;
             text-decoration: none;
-            margin-right: 1rem;
+            /* margin-right: 1rem; */
             transition: opacity 0.3s;
+        }
+
+        .contact-info a:not(:last-child) {
+            margin-right: 1rem;
         }
 
         .contact-info a:hover {
@@ -268,7 +352,9 @@
 
         /* Projects Section */
         .project-card {
-            background-color: rgba(40, 40, 40, 0.6);
+            /* background-color: rgba(40, 40, 40, 0.6); */
+            background-color: rgba(18, 18, 18, 0.7);
+            backdrop-filter: blur(5px);
             border-radius: 8px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
@@ -310,7 +396,9 @@
         }
 
         .skill-category {
-            background-color: rgba(40, 40, 40, 0.6);
+            /* background-color: rgba(40, 40, 40, 0.6); */
+            background-color: rgba(18, 18, 18, 0.7);
+            backdrop-filter: blur(5px);
             border-radius: 8px;
             padding: 1.5rem;
             border-top: 4px solid #64ffda;
@@ -343,15 +431,19 @@
 
         /* Experience Section */
         .experience-item {
+            background-color: rgba(18, 18, 18, 0.7);
+            backdrop-filter: blur(5px);
             margin-bottom: 2rem;
             position: relative;
             padding-left: 1.5rem;
+            padding-right: 1.5rem;
             border-left: 2px solid #2a2a2a;
             padding-bottom: 1rem;
             text-align: justify;
             max-width: 650px;
             margin-left: auto;
             margin-right: auto;
+            border-radius: 8px;
         }
 
         .experience-item::before {
@@ -378,11 +470,13 @@
         }
 
         .experience-title {
+            margin-top: 20px;
             font-weight: 600;
             color: #fff;
         }
 
         .experience-date {
+            margin-top: 20px;
             color: #64ffda;
             font-size: 0.9rem;
         }
@@ -413,7 +507,9 @@
 
         /* Education Section */
         .education-item {
-            background-color: rgba(40, 40, 40, 0.6);
+            /* background-color: rgba(40, 40, 40, 0.6); */
+            background-color: rgba(18, 18, 18, 0.7);
+            backdrop-filter: blur(5px);
             border-radius: 8px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
@@ -515,6 +611,9 @@
     </style>
 </head>
 <body>
+    <!-- Animated gradient background -->
+    <div class="animated-gradient"></div>
+
     <div class="container">
         <!-- Navigation Bar -->
         <div class="nav-bar">
@@ -547,9 +646,18 @@
                             <a href="https://linkedin.com/in/andy-lee1"><i class="fab fa-linkedin" style="font-size: 40px;"></i></a>
                         </div> -->
                     </div>
-                        <div class="profile-container" style="display: flex; justify-content: center; margin-left: auto; margin-right: auto;">
-                            <div class="profile-info">
-                            <h2>Andy Lee</h2>
+                    <div class="profile-container" style="display: flex; justify-content: center; margin-left: auto; margin-right: auto;">
+                        <div class="profile-info">
+                            <!-- Add flex container for the "Andy Lee" line -->
+                            <div style="display: flex;">
+                                <h2>Andy Lee</h2>
+                                <span style="margin-left: auto;">
+                                    <div class="contact-info">
+                                        <a href="mailto:al4744@columbia.edu" target="_blank">Email</a>
+                                        <a href="https://linkedin.com/in/andy-lee1" target="_blank">LinkedIn</a>
+                                    </div>
+                                </span>
+                            </div>
                             <p style="max-width: 650px; text-align: justify;">I am pursuing a master’s degree in Computer 
                             Science at Columbia University to deepen my technical skills after graduating 
                             from NYU with a bachelor’s degree in Music Technology and Business of Entertainment, 
@@ -558,10 +666,10 @@
                             applications of programming, machine learning, and data analysis in music production 
                             and audio engineering. By combining my creative background with computer science, 
                             I aim to contribute to projects that push the boundaries of technology.</p>
-                            <div class="contact-info"">
+                            <!-- <div class="contact-info">
                                 <a href="mailto:al4744@columbia.edu" target="_blank">Email</a>
                                 <a href="https://linkedin.com/in/andy-lee1" target="_blank">LinkedIn</a>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
