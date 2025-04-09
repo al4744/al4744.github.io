@@ -181,10 +181,50 @@
             pointer-events: all;
         }
 
-        /* Content Styles */
+        /* Title Animation Classes */
+        /* TODO */
+        @keyframes slideLeftOut {
+            0% { transform: translateX(0); opacity: 1; }
+            100% { transform: translateX(-100px); opacity: 0; }
+        }
 
+        @keyframes slideRightOut {
+            0% { transform: translateX(0); opacity: 1; }
+            100% { transform: translateX(100px); opacity: 0; }
+        }
+
+        @keyframes slideLeftIn {
+            0% { transform: translateX(100px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideRightIn {
+            0% { transform: translateX(-100px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        .slide-left-out {
+            animation: slideLeftOut 0.4s ease forwards;
+        }
+
+        .slide-right-out {
+            animation: slideRightOut 0.4s ease forwards;
+        }
+
+        .slide-left-in {
+            animation: slideLeftIn 0.4s ease forwards;
+        }
+
+        .slide-right-in {
+            animation: slideRightIn 0.4s ease forwards;
+        }
+
+        /* Content Styles */
         .page-title-container {
-            text-align: center; /* Centers the title */
+            text-align: center;
+            height: 80px;
+            position: relative;
+            overflow: visible; /* Change from hidden to visible to prevent cutting off */
         }
 
         .page-title {
@@ -194,20 +234,22 @@
             margin-bottom: 1.5rem;
             position: relative;
             display: inline-block;
+            transition: transform 0.4s ease, opacity 0.4s ease;
         }
 
-        .page-title::after {
-            content: '';
-            position: absolute;
-            width: calc(100% + 40px); /* This adds extra length to the underline */
+        .title-underline {
+            position: fixed;
             height: 3px;
-            bottom: -8px;
-            left: 50%; /* Position it in the center */
-            transform: translateX(-50%); /* Center it exactly */
             background-color: #64ffda;
+            left: 50%;
+            /* Position it exactly where the original underline was */
+            transform: translateX(-50%);
+            transition: width 0.4s ease;
+            z-index: 100;
+            pointer-events: none;
         }
-
         .page-content {
+            margin-top: -22.5px;
             max-height: calc(100% - 4rem);
             overflow: auto;
             padding-right: 1rem;
@@ -437,7 +479,8 @@
             position: relative;
             padding-left: 1.5rem;
             padding-right: 1.5rem;
-            border-left: 2px solid #2a2a2a;
+            /* border-left: 2px solid #2a2a2a; */
+            border-left: 4px solid #64ffda;
             padding-bottom: 1rem;
             text-align: justify;
             max-width: 650px;
@@ -446,7 +489,8 @@
             border-radius: 8px;
         }
 
-        .experience-item::before {
+        /* BLUE CIRCLE THAT'S ON LEFT */
+        /* .experience-item::before {
             content: '';
             position: absolute;
             width: 12px;
@@ -455,7 +499,7 @@
             border-radius: 50%;
             left: -7px;
             top: 8px;
-        }
+        } */
 
         .experience-header {
             display: flex;
@@ -920,51 +964,123 @@
     </div>
 
     <script>
-        // JavaScript for handling navigation and page transitions
         document.addEventListener('DOMContentLoaded', function() {
-            // Get all navigation items and pages
-            const navItems = document.querySelectorAll('.nav-item');
-            const pages = document.querySelectorAll('.page');
+        // Get all navigation items and pages
+        const navItems = document.querySelectorAll('.nav-item');
+        const pages = document.querySelectorAll('.page');
+        
+        // Track current active nav index
+        let currentNavIndex = 0;
+        
+        // Create a shared underline that will appear across all pages
+        const underline = document.createElement('div');
+        underline.className = 'title-underline';
+        document.body.appendChild(underline); // Add to body to position absolutely
+        
+        // Function to update underline position based on active title
+        function updateUnderline(titleElement) {
+            if (!titleElement) return;
             
-            // Show About page by default
-            document.getElementById('about').classList.add('active');
-            document.querySelector('[data-page="about"]').classList.add('active');
-            
-            // Handle click events for navigation
-            navItems.forEach(item => {
-                // Handle hover events
-                item.addEventListener('mouseenter', function() {
-                    const pageId = this.getAttribute('data-page');
-                    
-                    // Only show the page if no page is currently active (locked by click)
-                    if (!document.querySelector('.nav-item.active')) {
-                        pages.forEach(page => page.classList.remove('active'));
-                        document.getElementById(pageId).classList.add('active');
-                    }
-                });
+            const rect = titleElement.getBoundingClientRect();
+            // Position the underline below the current title
+            underline.style.width = `${titleElement.offsetWidth + 40}px`;
+            underline.style.top = `${rect.bottom + 5}px`; // 8px below the title
+            underline.style.opacity = '1';
+        }
+        
+        // Show About page by default
+        document.getElementById('about').classList.add('active');
+        document.querySelector('[data-page="about"]').classList.add('active');
+        
+        // Set initial underline position
+        const initialTitle = document.querySelector('.page.active .page-title');
+        updateUnderline(initialTitle);
+        
+        // Handle click events for navigation
+        navItems.forEach((item, index) => {
+            // Handle hover events
+            item.addEventListener('mouseenter', function() {
+                const pageId = this.getAttribute('data-page');
                 
-                // Handle click events
-                item.addEventListener('click', function() {
-                    // First, remove active class from all nav items and pages
-                    navItems.forEach(navItem => navItem.classList.remove('active'));
-                    pages.forEach(page => page.classList.remove('active'));
-                    
-                    // Then add active class to the clicked item and corresponding page
-                    this.classList.add('active');
-                    const pageId = this.getAttribute('data-page');
-                    document.getElementById(pageId).classList.add('active');
-                });
-            });
-            
-            // Handle mouse leaving navigation area
-            document.querySelector('.nav-bar').addEventListener('mouseleave', function() {
-                // If no page is locked by click, return to the default page
                 if (!document.querySelector('.nav-item.active')) {
                     pages.forEach(page => page.classList.remove('active'));
-                    document.getElementById('about').classList.add('active');
+                    document.getElementById(pageId).classList.add('active');
+                    
+                    // Update underline on hover
+                    const hoveredTitle = document.querySelector(`#${pageId} .page-title`);
+                    updateUnderline(hoveredTitle);
                 }
             });
+            
+            // Handle click events
+            item.addEventListener('click', function() {
+                if (this.classList.contains('active')) return;
+                
+                const clickedIndex = Array.from(navItems).indexOf(this);
+                
+                const currentNavItem = document.querySelector('.nav-item.active');
+                const currentPageId = currentNavItem ? currentNavItem.getAttribute('data-page') : 'about';
+                const currentPage = document.getElementById(currentPageId);
+                const newPageId = this.getAttribute('data-page');
+                const newPage = document.getElementById(newPageId);
+                
+                const currentTitle = currentPage.querySelector('.page-title');
+                const newTitle = newPage.querySelector('.page-title');
+                
+                // Determine animation direction
+                const slideDirection = clickedIndex > currentNavIndex ? 'left' : 'right';
+                
+                // Remove any existing animation classes
+                currentTitle.classList.remove('slide-left-out', 'slide-right-out');
+                newTitle.classList.remove('slide-left-in', 'slide-right-in');
+                
+                // Apply title animation classes
+                if (slideDirection === 'left') {
+                    currentTitle.classList.add('slide-left-out');
+                    newTitle.classList.add('slide-left-in');
+                } else {
+                    currentTitle.classList.add('slide-right-out');
+                    newTitle.classList.add('slide-right-in');
+                }
+                
+                /* STALLS UNDERLINE RESIZING UNTIL TITLE ANIMATION IS COMPLETE */
+                // Animate the underline (halfway through the title animation)
+                // setTimeout(() => {
+                //     updateUnderline(newTitle);
+                // }, 200); // Half the animation time
+                /* DOES NOT STALL UNDERLINE RESIZING UNTIL TITLE ANIMATION IS COMPLETE */
+                updateUnderline(newTitle);
+                
+                // Update page visibility
+                navItems.forEach(navItem => navItem.classList.remove('active'));
+                pages.forEach(page => page.classList.remove('active'));
+                
+                this.classList.add('active');
+                newPage.classList.add('active');
+                
+                // Update current nav index
+                currentNavIndex = clickedIndex;
+                
+                // Clean up animation classes
+                setTimeout(() => {
+                    currentTitle.classList.remove('slide-left-out', 'slide-right-out');
+                    newTitle.classList.remove('slide-left-in', 'slide-right-in');
+                }, 500);
+            });
         });
+        
+        // Handle mouse leaving navigation area
+        document.querySelector('.nav-bar').addEventListener('mouseleave', function() {
+            if (!document.querySelector('.nav-item.active')) {
+                pages.forEach(page => page.classList.remove('active'));
+                document.getElementById('about').classList.add('active');
+                
+                // Update underline when returning to default page
+                const defaultTitle = document.querySelector('#about .page-title');
+                updateUnderline(defaultTitle);
+            }
+        });
+    });
     </script>
 </body>
 </html>
