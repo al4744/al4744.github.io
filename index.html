@@ -5,7 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Andy Lee</title>
 <!--     <link rel="icon" type="image/png" href="icon.png" /> -->
+
+         <!-- LINK BELOW NEEDS ALL.MIN.CSS & FA-SOLID-900.TTF & FA-SOLID-900.WOFF2 -->
+          <link rel="stylesheet" href="css/all.min.css">
+            <!-- FALLBACK LINK BELOW (CAN BE USED IF UNCOMMENTED)-->
+              <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" 
+          integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw==" 
+          crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
     <style>
+        /* USED FOR NAV-BAR ICONS */
+        @font-face {
+            font-family: "Font Awesome 6 Free";
+            font-style: normal;
+            font-weight: 900;
+            font-display: block;
+            src: url("../webfonts/fa-solid-900.woff2") format("woff2"),
+                url("../webfonts/fa-solid-900.ttf") format("truetype");
+        }
+        
         /* Reset and Base Styles */
         * {
             margin: 0;
@@ -106,31 +123,34 @@
         /* Navigation Bar */
         .nav-bar {
             display: flex;
-            /* border-radius: 0 0 15px 15px; Bottom of Playing card border */
             border-radius: 9999px;
             justify-content: space-between;
             align-items: center;
             padding: .5rem;
-            /* Background effects */
             background-color: rgba(18, 18, 18, 0.3);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            margin: 0 auto;
-            margin-top: 1rem;
-            margin-bottom: 1rem;
-            /* box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5); */
-            /* box-shadow: 0 0 10px 0 rgba(100, 255, 218, 0.5); */
+            margin: 1rem auto;
+            height: 51.5px;
+            /* max-width: 666px; */ 
         }
 
         .nav-item {
-            /* margin: 0 1.5rem; */
             cursor: pointer;
             color: #fff;
             font-weight: 600;
             transition: color 0.3s, transform 0.3s;
             position: relative;
-            padding: 0.5rem 1.75rem;
+            /* padding: 0.5rem 1.75rem; */
+            padding: 0.5rem 1rem;
             border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-item i {
+            font-size: 1.1rem;
         }
 
         .nav-item:hover, .nav-item.active {
@@ -139,40 +159,54 @@
         }
 
         .nav-item.active {
-            /*Old Active Background Color / Radius*/
-            /* background-color: rgba(100, 255, 218, 0.1); */ 
-            /* border-radius: 9999px; */
             transform: translateY(0px);
         }
 
         .nav-indicator {
             position: absolute;
-            height: 80%; /* Slightly smaller than the nav height */
+            height: 80%;
             background-color: rgba(100, 255, 218, 0.1);
             border-radius: 9999px;
             transition: all 0.3s ease;
-            z-index: 1; /* Below the text */
+            z-index: 1;
             top: 50%;
             transform: translateY(-50%);
-            /* Initial position and width will be set by JavaScript */
         }
 
-        /* NAVBAR UNDERLINE */
-        /* .nav-item::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -2px;
-            left: 50%;
-            background-color: #64ffda;
-            transition: all 0.3s;
-        } */
+        /*
+        EDITS FOR 'MAX-WIDTH'
+        (Choose When Nav-Bar Adjusts with Icons)
+            576px (small phones)
+            768px (tablets)
+            992px (laptops)
+            1200px (desktops)
+            666px + 2rem = 698px
+        */
 
-        .nav-item:hover::after, .nav-item.active::after {
-            width: 100%;
-            left: 0;
+        /* Media query for smaller screens */
+        @media (max-width: 698px) {
+            .nav-text {
+                display: none;
+            }
+            .nav-item {
+                padding: 0.5rem 1rem;
+                justify-content: center;
+            }
+            .nav-item i {
+                font-size: 1.2rem;
+            }
         }
+
+        /* Even smaller screens - make navbar more compact */
+        @media (max-width: 480px) {
+            .nav-bar {
+                padding: .3rem;
+            }
+            .nav-item {
+                padding: 0.4rem 0.7rem;
+            }
+        }
+        
 
         /* Content Area */
         .content-area {
@@ -224,14 +258,12 @@
             text-align: center;
             height: 80px;
             position: relative;
-            overflow: visible; /* Change from hidden to visible to prevent cutting off */
         }
 
         .page-title {
             color: #64ffda;
             font-size: 2.5rem;
-            margin-top: -15px;
-            margin-bottom: 1.5rem;
+            margin-top: -30px;
             position: relative;
             display: inline-block;
             transition: transform 0.4s ease, opacity 0.4s ease;
@@ -331,6 +363,7 @@
             width: 225px;
             height: 225px;
             border-radius: 50%;
+            transition: all 0.3s ease; /* FOR CIRCLE - HOVER - SCALE EFFECT*/
             /* outline: 30px solid rgba(0, 0, 0, 0.35);
             outline-offset: -12px; */
         }
@@ -345,6 +378,11 @@
             /* border: 3px solid #64ffda; */
             /* border: 3px solid #a8a8a872; */
         }
+
+        /* Circle Grows During Hover */
+        /* .circle:hover {
+            transform: scale(1.025);
+        } */
 
         .circle::before,
         .circle::after {
@@ -658,11 +696,26 @@
         <!-- Navigation Bar -->
         <div class="nav-bar">
             <div class="nav-indicator"></div>
-            <div class="nav-item" data-page="about">About Me</div>
-            <div class="nav-item" data-page="projects">Projects</div>
-            <div class="nav-item" data-page="skills">Skills</div>
-            <div class="nav-item" data-page="experience">Experience</div>
-            <div class="nav-item" data-page="education">Education</div>
+            <div class="nav-item" data-page="about">
+                <i class="fas fa-home"></i>
+                <span class="nav-text">About Me</span>
+            </div>
+            <div class="nav-item" data-page="projects">
+                <i class="fas fa-tools"></i>
+                <span class="nav-text">Projects</span>
+            </div>
+            <div class="nav-item" data-page="skills">
+                <i class="fas fa-trophy"></i>
+                <span class="nav-text">Skills</span>
+            </div>
+            <div class="nav-item" data-page="experience">
+                <i class="fas fa-briefcase"></i>
+                <span class="nav-text">Experience</span>
+            </div>
+            <div class="nav-item" data-page="education">
+                <i class="fas fa-graduation-cap"></i>
+                <span class="nav-text">Education</span>
+            </div>
         </div>
 
         <!-- Content Area -->
@@ -1042,15 +1095,10 @@
                 // Remove any existing animation classes
                 currentTitle.classList.remove('slide-left-out', 'slide-right-out');
                 newTitle.classList.remove('slide-left-in', 'slide-right-in');
-                
+
                 // Apply title animation classes
-                if (slideDirection === 'left') {
-                    currentTitle.classList.add('slide-left-out');
-                    newTitle.classList.add('slide-left-in');
-                } else {
-                    currentTitle.classList.add('slide-right-out');
-                    newTitle.classList.add('slide-right-in');
-                }
+                currentTitle.classList.add(slideDirection === 'left' ? 'slide-left-out' : 'slide-right-out');
+                newTitle.classList.add(slideDirection === 'left' ? 'slide-left-in' : 'slide-right-in');
                 
                 // Update the indicator position to the clicked nav item
                 updateIndicator(this);
@@ -1076,6 +1124,7 @@
             });
         });
         
+        //START: IS THIS CODE DOING ANYTHING!?!
         // Handle mouse leaving navigation area
         document.querySelector('.nav-bar').addEventListener('mouseleave', function() {
             if (!document.querySelector('.nav-item.active')) {
@@ -1086,7 +1135,7 @@
                 const defaultTitle = document.querySelector('#about .page-title');
                 updateUnderline(defaultTitle);
             }
-        });
+        }); //END: IS THIS CODE DOING ANYTHING!?!
         
         // Update on window resize to maintain correct positioning
         window.addEventListener('resize', () => {
