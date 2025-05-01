@@ -619,6 +619,23 @@
             line-height: 1.5;
         }
 
+        .project-grouper {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            width: 100%;
+            max-width: 1320px;
+        }
+
+        @media (max-width: 1400px) {
+            .project-grouper {
+                flex-direction: column;
+                align-items: center;
+                gap: 0px;
+            }
+        }
+
         /* Skills Section */
         .skills-container {
             display: grid;
@@ -960,7 +977,27 @@
                     <h1 class="page-title">Projects</h1>
                 </div>
                 <div class="page-content" style="display: flex; flex-direction: column; align-items: center;">
-                    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-bottom: 0px; width: 100%; max-width: 1320px; margin-top: 5px;">
+                    <div class="project-grouper" style="margin-top: 5px; margin-bottom: 0px;">
+                        <div class="project-card">
+                            <h3 class="project-title">Content Recommendation System</h3>
+                            <div class="project-tech">Python, ML Algorithms, Linear Algebra & Probability, Data Analysis, Visualization</div>
+                            <p class="project-description"><strong>Multi-Model Engine:</strong> Created song recommendation system which processed and analyzed 600k song dataset
+                            containing audio features and metadata. Applied Direct Similarity Matching, SVD, NMF, and Factorization Machines
+                            to generate personalized recommendations based on user preferences and behavior. <br>
+                            <strong>Optimization & Evaluation:</strong> Handled cold start, engineered cross-feature interactions, implemented dimension-
+                            reduction and matrix factorization techniques, created weighted similarity metrics combining genre and audio feature
+                            analysis. Developed visualization tools to assess model performance, analyzed latent spaces, examined feature
+                            distributions and effects of parameter changes.</p>
+                        </div>
+                        
+                        <div class="project-card">
+                            <h3 class="project-title">Word Replacer Tool</h3>
+                            <div class="project-tech">Java, Data Structures, Algorithms, File Manipulation, Performance Optimization</div>
+                            <p class="project-description">Developed a program in Java that performs global search and replace within a text file based on provided input text and word replacement pairs. Implemented several data structures (BSTree, RBTree, HashMap) to store and manage word pairs efficiently. Designed custom algorithms able to manage large inputs by utilizing unique transitive dependency handling and cycle detection, leading to highly optimized performance and runtimes.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="project-grouper" style="margin-bottom: 55px;">
                         <div class="project-card">  
                             <h3 class="project-title">Analog / Digital Synthesizers</h3>
                             <div class="project-tech">C++, KiCad, Fusion360, PCB Design, 3D Modeling, Analog / Digital Signal Processing</div>
@@ -971,20 +1008,6 @@
                             <h3 class="project-title">Interactive Sound / Game Ball</h3>
                             <div class="project-tech">C++, KiCad, Fusion360, PCB Design, 3D Modeling, Analog / Digital Signal Processing</div>
                             <p class="project-description">Built all components of interactive ball with embedded sensors, allowing users to manipulate sound and play games based on orientation and accelerometer data. Developed unique user interface and algorithms in C++, created custom Printed Circuit Board (PCB) and designed 3D Model using KiCad and Fusion360.</p>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-bottom: 0px; width: 100%; max-width: 1320px;">
-                        <div class="project-card">
-                            <h3 class="project-title">Word Replacer Tool</h3>
-                            <div class="project-tech">Java, Data Structures, Algorithms, File Manipulation, Performance Optimization</div>
-                            <p class="project-description">Developed a program in Java that performs global search and replace within a text file based on provided input text and word replacement pairs. Implemented several data structures (BSTree, RBTree, HashMap) to store and manage word pairs efficiently. Designed custom algorithms able to manage large inputs by utilizing unique transitive dependency handling and cycle detection, leading to highly optimized performance and runtimes.</p>
-                        </div>
-
-                        <div class="project-card">
-                            <h3 class="project-title">Content Recommendation System</h3>
-                            <div class="project-tech">Python, Matplotlib, Matrix Factorization, Probability, Model Evaluation</div>
-                            <p class="project-description">Applied SVD, NMF, and ALS to uncover user preferences; integrated Bayesian models and conditional probability to enhance prediction accuracy. Optimized models using gradient descent and alternating minimization; handled sparse data, imputation, and feature engineering; evaluated performance with RMSE, precision, recall, and cross-validation.</p>
                         </div>
                     </div>
                 </div>
