@@ -58,12 +58,12 @@
             /* background-color: #121212; */
             color: #f5f5f5;
             overflow: hidden;
-            height: 100dvh;
+            height: 100vh;
         }
 
         /* Container for all content */
         .container {
-            height: 100dvh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             position: relative;
@@ -76,7 +76,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100dvh;
+            height: 100%;
             background: radial-gradient(100% 100% at var(--g4-1-x-position) var(--g4-1-y-position), #3a86ff -100%, transparent), 
                         radial-gradient(100% 100% at var(--g4-2-x-position) var(--g4-2-y-position), #8338ec -100%, transparent), 
                         radial-gradient(100% 100% at var(--g4-3-x-position) var(--g4-3-y-position), #00ffe1 -100%, transparent), 
@@ -135,6 +135,102 @@
             /* max-width: 666px; */ 
         }
 
+        .contact-bar {
+            position: fixed;
+            right: 1rem;
+            top: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 9999px;
+            background-color: rgba(18, 18, 18, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 0.5rem;
+            overflow: hidden; /* Hide overflowing content */
+            transition: height 0.3s ease, transform 0.3s ease; /* Added transform for hover effect */
+            height: 51.5px; /* Initial height shows only menu icon */
+            width: 51.5px;
+            z-index: 2;
+        }
+
+        /* HOVER MECHANICS FOR CONTACT BAR */
+        /* PICK ONLY EITHER 'A' OR 'B' (NOT BOTH) */
+        /* A */
+        .contact-bar.hover {
+            transform: translateY(-2px); /* Same hover effect as nav items */
+        }
+        /* B */
+        /* .menu-button:hover svg {
+            transform: translateY(-2px);
+            fill: #64ffda; /* Optional: same hover color */
+        /*} */
+
+        .contact-bar.open {
+            height: 202.5px; /* Height when expanded to show all icons */
+            transform: translateY(0); /* Reset transform when open */
+        }
+
+        .menu-button {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            margin: 0.3rem;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-button svg {
+            width: 100%;
+            height: 100%;
+            fill: white;
+            transition: transform 0.3s ease, fill 0.3s ease; /* Added fill transition */
+        }
+
+        .contact-bar.hover .menu-button svg {
+            fill: #64ffda; /* Same color as active nav items */
+        }
+
+        .contact-bar.open .menu-button svg {
+            transform: rotate(90deg);
+            fill: #64ffda; /* Keep highlighted when open */
+        }
+
+        .contact-items {
+            display: flex;
+            flex-direction: column;
+            margin-top: 0.2rem;
+            opacity: 0;
+            transform: translateY(-10px); /* Start slightly up for animation */
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none; /* Initially unclickable */
+        }
+
+        .contact-bar.open .contact-items {
+            opacity: 1;
+            transform: translateY(0); /* Move to normal position when visible */
+            pointer-events: all; /* Make clickable when visible */
+        }
+
+        .contact-icon {
+            width: 24px; /* Adjust size as needed */
+            height: 24px;
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .contact-item {
+            margin: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.3rem;
+        }
+
+        .contact-item:hover .contact-icon {
+            transform: translateY(-2px);
+            filter: brightness(0) saturate(100%) invert(100%) sepia(36%) saturate(2778%) hue-rotate(79deg) brightness(110%) contrast(104%);
+        }
+
         .nav-item {
             cursor: pointer;
             color: #fff;
@@ -183,6 +279,71 @@
             666px + 2rem = 698px
         */
 
+        /* For your media query that removes contact icons */
+        @media (min-width: 1060px){
+            /* Adjusting the contact-bar to be horizontal */
+            .menu-button {
+                display: none;
+            }
+            
+            .contact-bar {
+                position: absolute;
+                right: 1rem;
+                top: 1rem;
+                display: flex;
+                flex-direction: row; /* Change to row for horizontal layout */
+                justify-content: center; /* Center items horizontally */
+                align-items: center;
+                padding: 0.5rem;
+                background-color: rgba(18, 18, 18, 0.3);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                height: 51.5px; /* Keep the height the same */
+                width: auto; /* Ensure it expands based on content */
+                transition: none !important;
+            }
+
+            /* Adjust the contact-items for horizontal layout */
+            .contact-items {
+                display: flex;
+                flex-direction: row; /* Change to row for horizontal layout */
+                margin-top: 0; /* Reset margin */
+                opacity: 1; /* Make sure items are visible */
+                transform: translateY(0); /* Ensure no transform */
+                pointer-events: all; /* Ensure items are clickable */
+            }
+
+            .contact-item {
+                margin: 0 0.5rem; /* Adjusted margin for horizontal spacing */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .contact-item:hover .contact-icon {
+                transform: translateY(-2px);
+                filter: brightness(0) saturate(100%) invert(100%) sepia(36%) saturate(2778%) hue-rotate(79deg) brightness(110%) contrast(104%);
+            }
+
+            .contact-bar.hover {
+                transform: translateY(0); /* Same hover effect as nav items */
+            }
+
+            /* Optional: Adjust icons size if needed for horizontal layout */
+            .contact-icon {
+                width: 24px;
+                height: 24px;
+                display: block;
+                transition: transform 0.3s;
+            }
+        }
+        
+        @media (max-width: 830px) and (min-width: 699px) {
+            .nav-item i {
+                display: none !important; /* Hides only the icons inside the nav-item */
+            }
+        }
+        
         /* Media query for smaller screens */
         @media (max-width: 698px) {
             .nav-text {
@@ -207,6 +368,11 @@
             }
         }
         
+        @media (max-width: 432px) {
+            .contact-bar {
+                display: none;
+            }
+        }
 
         /* Content Area */
         .content-area {
@@ -220,7 +386,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100dvh; /* Set to full viewport height */
+            height: 100vh; /* Set to full viewport height */
             padding: 2rem;
             opacity: 0;
             pointer-events: none;
@@ -718,6 +884,25 @@
             </div>
         </div>
 
+        <div class="contact-bar">
+            <div class="menu-button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/>
+                </svg>
+            </div>
+            <div class="contact-items">
+                <a href="mailto:example@email.com" class="contact-item">
+                    <img src="mail.png" alt="Email" class="contact-icon">
+                </a>
+                <a href="https://github.com/yourusername" class="contact-item">
+                    <img src="github.png" alt="GitHub" class="contact-icon">
+                </a>
+                <a href="https://linkedin.com/in/yourusername" class="contact-item">
+                    <img src="linkedin.png" alt="LinkedIn" class="contact-icon">
+                </a>
+            </div>
+        </div>
+
         <!-- Content Area -->
         <div class="content-area">
             <!-- About Me -->
@@ -1052,11 +1237,12 @@
         document.querySelector('[data-page="about"]').classList.add('active');
         
         // Set initial positions
-        const initialNavItem = document.querySelector('.nav-item.active') || navItems[0];
-        const initialTitle = document.querySelector('.page.active .page-title');
-        
-        updateIndicator(initialNavItem);
-        updateUnderline(initialTitle);
+        window.addEventListener('load', () => {
+            const activeNavItem = document.querySelector('.nav-item.active') || navItems[0];
+            const activeTitle = document.querySelector('.page.active .page-title');
+            updateIndicator(activeNavItem);
+            updateUnderline(activeTitle);
+        });
         
         // Handle click events for navigation
         navItems.forEach((item, index) => {
@@ -1136,12 +1322,80 @@
                 updateUnderline(defaultTitle);
             }
         }); //END: IS THIS CODE DOING ANYTHING!?!
+
+        //TODO >
+        // Make the logo appear clickable
+        if (document.querySelector('.logo-bar')) {
+            document.querySelector('.logo-bar').style.cursor = 'pointer';
+            
+            // Add click event for logo-bar
+            document.querySelector('.logo-bar').addEventListener('click', function() {
+                // Find and click the "About Me" nav item
+                document.querySelector('.nav-item[data-page="about"]').click();
+            });
+        }
+        //TODO <
         
         // Update on window resize to maintain correct positioning
         window.addEventListener('resize', () => {
             updateIndicator(document.querySelector('.nav-item.active'));
             updateUnderline(document.querySelector('.page.active .page-title'));
         });
+        
+        //TODO >
+        // CONTACT BAR FUNCTIONALITY
+        const contactBar = document.querySelector('.contact-bar');
+        const menuButton = document.querySelector('.menu-button');
+
+        let isExpandable = window.innerWidth < 1060; // Track if menu should be expandable
+
+        // Handle screen resize to adjust expandability
+        const handleResize = () => {
+            const nowExpandable = window.innerWidth < 1060;
+
+            if (!nowExpandable && isExpandable) {
+                // Screen switched from small to large
+                contactBar.classList.remove('open');
+                contactBar.classList.remove('hover');
+            }
+
+            isExpandable = nowExpandable;
+        };
+
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Initialize on load
+
+        // Toggle contact bar open/closed when menu button is clicked
+        menuButton.addEventListener('click', function () {
+            if (!isExpandable) return; // Don't toggle on large screens
+
+            contactBar.classList.toggle('open');
+
+            // Close the contact bar when clicking outside of it
+            if (contactBar.classList.contains('open')) {
+                const closeContactBar = function (e) {
+                    if (!contactBar.contains(e.target)) {
+                        contactBar.classList.remove('open');
+                        document.removeEventListener('click', closeContactBar);
+                    }
+                };
+
+                setTimeout(() => {
+                    document.addEventListener('click', closeContactBar);
+                }, 10);
+            }
+        });
+
+        // Add hover effect for contact bar
+        contactBar.addEventListener('mouseenter', function () {
+            if (isExpandable) contactBar.classList.add('hover');
+        });
+
+        contactBar.addEventListener('mouseleave', function () {
+            if (isExpandable && !contactBar.classList.contains('open')) {
+                contactBar.classList.remove('hover');
+            }
+        }); //TODO <
     });
     </script>
 </body>
